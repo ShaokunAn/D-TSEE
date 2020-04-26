@@ -14,10 +14,10 @@ ${BIN_DIR}/main.o\
 ${BIN_DIR}/ReadCsvData.o\
 ${BIN_DIR}/ea.o\
 ${BIN_DIR}/NormalizeData.o\
-${BIN_DIR}/ee.o\
+${BIN_DIR}/tsee.o\
 ${BIN_DIR}/other_fun.o\
-${BIN_DIR}/ee_error.o\
-${BIN_DIR}/eels.o\
+${BIN_DIR}/tsee_error.o\
+${BIN_DIR}/tseels.o\
 ${BIN_DIR}/SolveDir.o\
 
 

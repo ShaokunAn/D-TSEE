@@ -1,7 +1,7 @@
 #include <petsc.h>
-#include "petsc_ee_myhead.h"
+#include "petsc_tsee_myhead.h"
 
-PetscErrorCode ee(Mat Wp, Mat Wn, PetscInt d, PetscScalar lambda, Mat XX, PetscInt allrowcount, PetscInt rowcount, PetscInt maxit, PetscScalar tol){
+PetscErrorCode tsee(Mat Wp, Mat Wn, PetscInt d, PetscScalar lambda, Mat XX, PetscInt allrowcount, PetscInt rowcount, PetscInt maxit, PetscScalar tol){
 
     PetscErrorCode ierr;
     PetscInt i, j, istart, iend, nlocal;
@@ -66,7 +66,7 @@ PetscErrorCode ee(Mat Wp, Mat Wn, PetscInt d, PetscScalar lambda, Mat XX, PetscI
     PetscScalar e;
     Mat ker;
     ierr = MatCreateDense(MPI_COMM_WORLD, rowcount, PETSC_DECIDE, allrowcount, allrowcount, NULL, &ker); CHKERRQ(ierr);
-    ierr = ee_error(XX, Wp, Wn, lambda, ker, allrowcount, d, &e); CHKERRQ(ierr);
+    ierr = tsee_error(XX, Wp, Wn, lambda, ker, allrowcount, d, &e); CHKERRQ(ierr);
 
 
 
@@ -170,8 +170,8 @@ PetscErrorCode ee(Mat Wp, Mat Wn, PetscInt d, PetscScalar lambda, Mat XX, PetscI
         ierr = SolveDir(ksp, G, P); CHKERRQ(ierr);
 
         // perform line search for steps
-        ierr = eels(XXold, XX, Wp, Wn, ker, lambda, P, e, G, &alpha, allrowcount, d); CHKERRQ(ierr); CHKERRQ(ierr);
-        ierr = ee_error(XX, Wp, Wn, lambda, ker, allrowcount, d, &e); CHKERRQ(ierr);
+        ierr = tseels(XXold, XX, Wp, Wn, ker, lambda, P, e, G, &alpha, allrowcount, d); CHKERRQ(ierr); CHKERRQ(ierr);
+        ierr = tsee_error(XX, Wp, Wn, lambda, ker, allrowcount, d, &e); CHKERRQ(ierr);
 
 
         // determine whether to stop

@@ -185,7 +185,7 @@ int main(int argc, char **args){
         ierr = PetscFree(idx); CHKERRQ(ierr);
         free(XX_val);
 
-        ierr = ee(Wp, Wn, d, lambda, XX, allrowcount, rowcount, maxit, tol); CHKERRQ(ierr);
+        ierr = tsee(Wp, Wn, d, lambda, XX, allrowcount, rowcount, maxit, tol); CHKERRQ(ierr);
 
 
         // write data into csv file

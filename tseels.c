@@ -1,7 +1,7 @@
 #include<petsc.h>
-PetscErrorCode ee_error(Mat, Mat, Mat, PetscScalar, Mat, PetscInt, PetscInt, PetscScalar *);
+PetscErrorCode tsee_error(Mat, Mat, Mat, PetscScalar, Mat, PetscInt, PetscInt, PetscScalar *);
 
-PetscErrorCode eels(Mat XXold, Mat XX, Mat Wp, Mat Wn, Mat ker, PetscScalar lambda, Mat P, PetscScalar ff, Mat G, PetscScalar *alpha, PetscInt cellcount, PetscInt d){
+PetscErrorCode tseels(Mat XXold, Mat XX, Mat Wp, Mat Wn, Mat ker, PetscScalar lambda, Mat P, PetscScalar ff, Mat G, PetscScalar *alpha, PetscInt cellcount, PetscInt d){
 
     PetscScalar rho=0.8, c=0.1, temp=0, e, *G_row, *P_row, tempsum;
     PetscInt i,j, istart, iend, *id;
@@ -34,13 +34,13 @@ PetscErrorCode eels(Mat XXold, Mat XX, Mat Wp, Mat Wn, Mat ker, PetscScalar lamb
     ierr = MatCopy(XXold, tt, SAME_NONZERO_PATTERN); CHKERRQ(ierr);
     ierr = MatAXPY(tt, *alpha, P, SAME_NONZERO_PATTERN); CHKERRQ(ierr);
 
-    ierr = ee_error(tt, Wp, Wn, lambda, ker, cellcount,d, &e); CHKERRQ(ierr);
+    ierr = tsee_error(tt, Wp, Wn, lambda, ker, cellcount,d, &e); CHKERRQ(ierr);
     
     while(e > ff + *alpha * tempsum){
         *alpha = *alpha *rho;
         ierr = MatCopy(XX, tt, SAME_NONZERO_PATTERN); CHKERRQ(ierr);
         ierr = MatAXPY(tt, *alpha, P, SAME_NONZERO_PATTERN); CHKERRQ(ierr);
-        ierr = ee_error(tt, Wp, Wn, lambda, ker, cellcount, d, &e); CHKERRQ(ierr);
+        ierr = tsee_error(tt, Wp, Wn, lambda, ker, cellcount, d, &e); CHKERRQ(ierr);
     }
 
     ierr = MatCopy(tt, XX, SAME_NONZERO_PATTERN); CHKERRQ(ierr);

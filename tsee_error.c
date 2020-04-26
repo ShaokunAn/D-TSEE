@@ -1,5 +1,5 @@
 #include <petsc.h>
-PetscErrorCode ee_error(Mat XX, Mat Wp, Mat Wn, PetscScalar lambda, Mat ker, PetscInt cellcount, PetscInt d, PetscScalar* e){
+PetscErrorCode tsee_error(Mat XX, Mat Wp, Mat Wn, PetscScalar lambda, Mat ker, PetscInt cellcount, PetscInt d, PetscScalar* e){
 
     PetscErrorCode ierr;
     PetscInt istart, iend, i, j, k, *id;
